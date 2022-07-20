@@ -1,31 +1,58 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column v-if="index" label="序号" type="index" width="55"></el-table-column>
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+      @sort-change="handleSortChange"
+    >
+      <el-table-column
+        v-if="index"
+        label="序号"
+        type="index"
+        width="55"
+      ></el-table-column>
       <el-table-column v-if="checkbox" type="selection" width="55"></el-table-column>
-      <template v-for="(item, index) in column">
-        <el-table-column v-if="item.type === 'function'" :key="index" :prop="item.prop" :label="item.label"
-          :width="item.width">
-          <template v-slot="scope">
-            <div v-html="item.callback && item.callback(scope.row, index)"></div>
-          </template>
-        </el-table-column>
-        <el-table-column v-if="item.type === 'slot'" :key="index" :prop="item.prop" :label="item.label"
-          :width="item.width">
-          <template v-slot="scope">
-            <slot :name="item.slot_name" :data="scope.row"></slot>
-          </template>
-        </el-table-column>
-        <el-table-column v-else :key="index" :prop="item.prop" :label="item.label" :width="item.width">
-        </el-table-column>
-      </template>
+      <el-table-column
+        v-for="(item, index) in column"
+        :sort-by="item.sortBy"
+        :sortable="item.sort"
+        :render-header="item.renderHeader"
+        :key="index"
+        :prop="item.prop"
+        :label="item.label"
+        :width="item.width"
+      >
+        <template v-slot="scope">
+          <slot
+            v-if="item.type === 'slot'"
+            :name="item.slot_name"
+            :data="scope.row"
+          ></slot>
+          <component
+            v-else
+            :data="scope.row"
+            :config="item"
+            :prop="item.prop"
+            :is="!item.type ? 'com-text' : `com-${item.type}`"
+          ></component>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'yangTable',
+// const modules = {},
+// const files = require.context('../control', true, /index.vue$/i)
+// files.keys().forEach(item => {
+//   const key = item.split('/')
+//   const name = key[1]
+//   modules[`com-${name}`] = files(item).default
+// }),
+// console.log(modules)
+  name: 'ccTable',
   props: {
     column: {
       type: Array,
@@ -103,5 +130,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

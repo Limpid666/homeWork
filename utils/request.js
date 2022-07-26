@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // 创建axios实例对象
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API,
+  // baseURL: process.env.VUE_APP_API,
   timeout: 5000
 })
 
@@ -25,7 +25,19 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+// 统一了传参处理
 const request = (options) => {
+  // if (options.method.toLowerCase() === 'get') {
+  //   options.params = options.data || {}
+  // }
+  // console.log(options)
+
+  // 解决请求多个代理名称问题
+  console.log(options.basePath)
+  if (options.basePath) {
+    service.defaults.baseURL = options.basePath
+  }
   return service(options)
 }
 

@@ -14,6 +14,7 @@ module.exports = {
     'space-before-function-paren': 'off',
     'vue/multi-word-component-names': 'off',
     'eol-last': 0,
-    'no-unreachable': 'off'
+    'no-unreachable': 'off',
+    'no-dupe-keys': 'off'
   }
 }

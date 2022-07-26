@@ -14,12 +14,21 @@ module.exports = {
           [`^${process.env.VUE_APP_API}`]: ''
         }
       }
-    }
-  },
-  css: {
-    loaderOptions: {
-      scss: {
-        additionalData: "@import './src/styles/scssconfig.scss';"
+      // proxy: {
+      //   [process.env.VUE_APP_API]: {
+      //     target: process.env.VUE_API_DEV_TARGET, // API服务器的地址
+      //     changeOrigin: true,
+      //     pathRewrite: {
+      //       [`^${process.env.VUE_APP_API}`]: ''
+      //     }
+      //   }
+      // }
+    },
+    css: {
+      loaderOptions: {
+        scss: {
+          additionalData: "@import './src/styles/scssconfig.scss';"
+        }
       }
     }
   }
